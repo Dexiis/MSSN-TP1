@@ -15,7 +15,6 @@ public class GameOfLifeGUI implements ActionListener {
     private JButton stopButton;
     private Timer timer;
 
-    // A grade agora usa int para diferenciar células "novas"
     private int[][] grid = new int[GRID_SIZE][GRID_SIZE];
 
     public GameOfLifeGUI() {
