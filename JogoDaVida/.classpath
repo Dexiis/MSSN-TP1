@@ -6,5 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="core-4.4.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
