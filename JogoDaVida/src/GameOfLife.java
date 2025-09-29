@@ -8,7 +8,7 @@ public class GameOfLife extends PApplet {
   int[][] next;
 
   public static void main(String[] args) {
-    PApplet.main("Game Of Life");
+    PApplet.main("GameOfLife");
   }
 
   public void settings() {
