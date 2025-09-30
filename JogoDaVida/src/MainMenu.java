@@ -3,17 +3,13 @@ import processing.core.PApplet;
 public class MainMenu extends PApplet {
 
 	String title = "Chose your game:";
-	String option1 = "Start Game of Life)";
-	String option2 = "Start 2D Cellular Automata";
-
-	public class Main {
-		public static void main(String[] args) {
-			PApplet.main("MainMenu");
-		}
-	}
+	String option1 = "Start Custom Game of Life 23/3";
+	String option2 = "Start Game of Life 23/3 with colours";
+	String option3 = "Start Game of Life 23/36 with colours";
+	String option4 = "Start 2D Cellular Automata";
 
 	public void settings() {
-		size(400, 200);
+		size(500, 300);
 	}
 
 	public void setup() {
@@ -31,6 +27,10 @@ public class MainMenu extends PApplet {
 		drawButton(width / 2, 80, 300, 40, option1, 1);
 
 		drawButton(width / 2, 140, 300, 40, option2, 2);
+
+		drawButton(width / 2, 200, 300, 40, option3, 3);
+		
+		drawButton(width / 2, 260, 300, 40, option4, 4);
 	}
 
 	void drawButton(float x, float y, float w, float h, String label, int id) {
@@ -50,14 +50,24 @@ public class MainMenu extends PApplet {
 		float x = width / 2;
 		float w = 300;
 		float h = 40;
-
+		
 		float y1 = 80;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y1 - h / 2 && mouseY < y1 + h / 2) {
-			PApplet.main("GameOfLife");
+			PApplet.main("GameOfLifeCustom");
 		}
 
 		float y2 = 140;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y2 - h / 2 && mouseY < y2 + h / 2) {
+			PApplet.main("GameOfLifeColours233");
+		}
+
+		float y3 = 200;
+		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y3 - h / 2 && mouseY < y3 + h / 2) {
+			PApplet.main("GameOfLifeColours2336");
+		}
+		
+		float y4 = 260;
+		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y4 - h / 2 && mouseY < y4 + h / 2) {
 			PApplet.main("TwoDCellularAutomata");
 		}
 	}
