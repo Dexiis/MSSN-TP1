@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameOfLife extends PApplet {
+public class GameOfLifeColours233 extends PApplet {
 
 	int cols, rows;
 	int cellSize = 10;
@@ -59,7 +59,7 @@ public class GameOfLife extends PApplet {
 
 				if (x == 0 || x == cols - 1 || y == 0 || y == rows - 1) {
 					grid[x][y] = DEAD_COLOR_INDEX;
-				} else if (random(4) < 1) {
+				} else if (random(2) < 1) {
 					grid[x][y] = (int) random(1, MAX_LIVE_COLOR_INDEX + 1);
 				} else {
 					grid[x][y] = DEAD_COLOR_INDEX;
