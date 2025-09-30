@@ -4,6 +4,7 @@ public class GameOfLifeCustom extends PApplet {
 
 	int cols, rows;
 	int cellSize = 10;
+
 	int[][] grid;
 	int[][] next;
 
@@ -118,7 +119,7 @@ public class GameOfLifeCustom extends PApplet {
 					if (liveNeighbors < 2 || liveNeighbors > 3) {
 						next[x][y] = 0;
 					}
-					
+
 				} else {
 					if (liveNeighbors == 3) {
 						next[x][y] = 1;
@@ -135,9 +136,8 @@ public class GameOfLifeCustom extends PApplet {
 	public void mousePressed() {
 		if (mouseX >= buttonX1 && mouseX <= buttonX1 + buttonWidth && mouseY >= buttonY
 				&& mouseY <= buttonY + buttonHeight) {
-
+			
 			isPaused = true;
-			println("Jogo Pausado!");
 			return;
 		}
 
@@ -145,7 +145,6 @@ public class GameOfLifeCustom extends PApplet {
 				&& mouseY <= buttonY + buttonHeight) {
 
 			isPaused = false;
-			println("Jogo a Correr!");
 			return;
 		}
 
@@ -157,7 +156,6 @@ public class GameOfLifeCustom extends PApplet {
 			if (x_grid >= 0 && x_grid < cols && y_grid >= 0 && y_grid < rows) {
 
 				grid[x_grid][y_grid] = 1 - grid[x_grid][y_grid];
-				println("Célula em (" + x_grid + ", " + y_grid + ") alternada para: " + grid[x_grid][y_grid]);
 			}
 		}
 	}
