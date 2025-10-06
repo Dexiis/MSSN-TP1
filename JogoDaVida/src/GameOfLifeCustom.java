@@ -98,7 +98,10 @@ public class GameOfLifeCustom extends PApplet {
 
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				next[x][y] = grid[x][y];
+				if (x == 0 || x == cols - 1 || y == 0 || y == rows - 1)
+					next[x][y] = 0;
+				else
+					next[x][y] = grid[x][y];
 			}
 		}
 
@@ -136,7 +139,7 @@ public class GameOfLifeCustom extends PApplet {
 	public void mousePressed() {
 		if (mouseX >= buttonX1 && mouseX <= buttonX1 + buttonWidth && mouseY >= buttonY
 				&& mouseY <= buttonY + buttonHeight) {
-			
+
 			isPaused = true;
 			return;
 		}

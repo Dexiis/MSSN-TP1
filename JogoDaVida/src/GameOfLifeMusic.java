@@ -6,14 +6,15 @@ public class GameOfLifeMusic extends PApplet {
 	int cols, rows;
 	int cellSize = 10;
 
-	SinOsc sine;
 	int[] pentatonicFrequencies;
 
 	int[][] grid;
 	int[][] next;
-	
+
+	SinOsc sine = new SinOsc(this);
+
 	boolean isPaused = false;
-	
+
 	boolean notePlayedThisFrame = false;
 
 	int buttonWidth = 40;
@@ -25,7 +26,7 @@ public class GameOfLifeMusic extends PApplet {
 	int gridYStart = buttonY + buttonHeight + 10;
 
 	public void settings() {
-		size(10*12, 10*(12+5));
+		size(10 * 21, 10 * (21 + 5));
 	}
 
 	public void setup() {
@@ -37,11 +38,8 @@ public class GameOfLifeMusic extends PApplet {
 		grid = new int[cols][rows];
 		next = new int[cols][rows];
 
-		sine = new SinOsc(this);
-		sine.play();
-
 		pentatonicFrequencies = new int[] { 262, 294, 330, 392, 440 };
-		
+
 		initGridRandom();
 	}
 
@@ -106,12 +104,14 @@ public class GameOfLifeMusic extends PApplet {
 	}
 
 	void calculateNextGeneration() {
-		
-		sine.amp(0.0f);
+		sine.stop();
 
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				next[x][y] = grid[x][y];
+				if (x == 0 || x == cols - 1 || y == 0 || y == rows - 1)
+					next[x][y] = 0;
+				else
+					next[x][y] = grid[x][y];
 			}
 		}
 
@@ -140,12 +140,9 @@ public class GameOfLifeMusic extends PApplet {
 						int scaleIndex = y % pentatonicFrequencies.length;
 						float frequency = pentatonicFrequencies[scaleIndex];
 
-						SinOsc sine = new SinOsc(this);
-						sine.play();
-
 						sine.freq(frequency);
-
-						sine.amp(0.5f);
+						sine.amp(0.1f);
+						sine.play();
 					}
 				}
 			}
@@ -160,6 +157,7 @@ public class GameOfLifeMusic extends PApplet {
 		if (mouseX >= buttonX1 && mouseX <= buttonX1 + buttonWidth && mouseY >= buttonY
 				&& mouseY <= buttonY + buttonHeight) {
 			isPaused = true;
+			sine.stop();
 			return;
 		}
 
