@@ -11,7 +11,6 @@ public class TwoDCellularAutomata extends PApplet {
 	CellularAutomata ca;
 
 	final int NUMBER_OF_STATES = 9;
-	final int DEAD_COLOR_INDEX = 0;
 
 	public void settings() {
 		size(1600, 900);
@@ -40,7 +39,7 @@ public class TwoDCellularAutomata extends PApplet {
 
 	void setupColorStates() {
 		int[] customColors = new int[NUMBER_OF_STATES];
-		customColors[DEAD_COLOR_INDEX] = color(0, 0, 0);
+		customColors[0] = color(0, 0, 0);
 		customColors[1] = color(255, 0, 0);
 		customColors[2] = color(255, 255, 0);
 		customColors[3] = color(0, 255, 0);

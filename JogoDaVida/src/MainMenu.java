@@ -1,3 +1,4 @@
+import GameModes.*;
 import processing.core.PApplet;
 
 public class MainMenu extends PApplet {
@@ -56,31 +57,31 @@ public class MainMenu extends PApplet {
 
 		float y1 = 80;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y1 - h / 2 && mouseY < y1 + h / 2) {
-			PApplet.main("GameMode.GameOfLifeCustom");
+			PApplet.main(GameOfLifeCustom.class);
 		}
 
 		float y2 = 140;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y2 - h / 2 && mouseY < y2 + h / 2) {
-			PApplet.main("GameMode.GameOfLifeColours233");
+			PApplet.main(GameOfLifeColours233.class);
 		}
 
 		float y3 = 200;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y3 - h / 2 && mouseY < y3 + h / 2) {
-			PApplet.main("GameMode.GameOfLifeColours2336");
+			PApplet.main(GameOfLifeColours2336.class);
 		}
 
 		float y4 = 260;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y4 - h / 2 && mouseY < y4 + h / 2) {
-			PApplet.main("GameMode.TwoDCellularAutomata");
+			PApplet.main(TwoDCellularAutomata.class);
 		}
 
 		float y5 = 320;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y5 - h / 2 && mouseY < y5 + h / 2) {
-			PApplet.main("GameMode.GameOfLifeMusic");
+			PApplet.main(GameOfLifeMusic.class);
 		}
 	}
 
 	public static void main(String[] args) {
-		PApplet.main("MainMenu");
+		PApplet.main(MainMenu.class);
 	}
 }
