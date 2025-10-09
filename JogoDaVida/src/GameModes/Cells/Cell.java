@@ -1,6 +1,7 @@
 package GameModes.Cells;
 
 import processing.core.PApplet;
+import processing.sound.SinOsc;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ public class Cell {
 	private int nAlives;
 	protected Cell[] neighboringCells;
 	protected int width, height;
+	int[] frequencies;
 
 	private Map<Integer, Integer> colorCounts;
 
@@ -27,6 +29,7 @@ public class Cell {
 		width = ca.getCellWidth();
 		height = ca.getCellHeight();
 		colorCounts = new HashMap<>();
+		frequencies = new int[] { 131, 131 * 2, 131 * 3, 131 * 4, 131 * 5 };
 	}
 
 	public void setNeighboringCells(Cell[] neighboringCells) {
@@ -99,97 +102,88 @@ public class Cell {
 	}
 
 	public void applyRule233() {
-		if (state == 0 && nAlives == 3)
+		if (state == 0 && this.nAlives == 3)
 			state = 1;
-		if (state == 1 && (nAlives < 2 || nAlives > 3))
+		if (state == 1 && (this.nAlives < 2 || this.nAlives > 3))
 			state = 0;
 	}
 
-	public int applyRuleMusic() {
-		int nextState = this.state;
-
-		if (this.state == 1) {
-			if (nAlives < 2 || nAlives > 3) {
-				nextState = 0;
-			}
-		} else {
-			if (nAlives == 3) {
-				nextState = 1;
-			}
+	public void applyRuleMusic(SinOsc sine) {
+		if (this.state == 1 && (this.nAlives < 2 || this.nAlives > 3))
+			state = 0;
+		else if (this.nAlives == 3) {
+			state = 1;
+			int scaleIndex = this.row % frequencies.length;
+			float frequency = frequencies[scaleIndex];
+			sine.freq(frequency);
+			sine.amp(0.2f);
+			sine.play();
 		}
-
-		return nextState;
 	}
 
-	public int applyRuleColoursMajority() {
-		int nextState = this.state;
+	public void applyRuleColours233() {
+		if (this.state != 0) {
+			if (this.nAlives < 2 || this.nAlives > 3) {
+				this.state = 0;
+			} else {
+				this.state = determineNewColor();
+			}
+		} else {
+			if (this.nAlives == 3) {
+				this.state = determineNewColor();
+			}
+		}
+	}
+
+	public void applyRuleColours2336() {
+		if (this.state != 0) {
+			if (this.nAlives < 2 || this.nAlives > 3) {
+				this.state = 0;
+			} else {
+				this.state = determineNewColor();
+			}
+		} else {
+			if (this.nAlives == 3 || this.nAlives == 6) {
+				this.state = determineNewColor();
+			}
+		}
+	}
+
+	public void applyRuleColoursMajority() {
 
 		if (this.state != 0) {
 
 			Map<Integer, Integer> finalColorCounts = new HashMap<>(colorCounts);
 			finalColorCounts.put(this.state, finalColorCounts.getOrDefault(this.state, 0) + 1);
 
-			if (finalColorCounts.isEmpty()) {
-				return nextState;
-			}
+			if (!finalColorCounts.isEmpty()) {
 
-			int maxCount = Collections.max(finalColorCounts.values());
+				int maxCount = Collections.max(finalColorCounts.values());
 
-			List<Integer> winningColors = new ArrayList<>();
-			for (Map.Entry<Integer, Integer> entry : finalColorCounts.entrySet()) {
-				if (entry.getValue() == maxCount) {
-					winningColors.add(entry.getKey());
+				List<Integer> winningColors = new ArrayList<>();
+				for (Map.Entry<Integer, Integer> entry : finalColorCounts.entrySet()) {
+					if (entry.getValue() == maxCount) {
+						
+						winningColors.add(entry.getKey());
+						
+					}
+				}
+
+				if (winningColors.size() == 1) {
+					
+					this.state = winningColors.get(0);
+					
+				} else if (winningColors.size() > 1) {
+
+					if (!winningColors.contains(this.state)) {
+
+						int randomIndex = (int) ca.getPApplet().random(winningColors.size());
+						this.state = winningColors.get(randomIndex);
+						
+					}
 				}
 			}
 
-			if (winningColors.size() == 1) {
-				nextState = winningColors.get(0);
-			} else if (winningColors.size() > 1) {
-
-				if (!winningColors.contains(this.state)) {
-
-					int randomIndex = (int) ca.getPApplet().random(winningColors.size());
-					nextState = winningColors.get(randomIndex);
-				}
-			}
 		}
-
-		return nextState;
-	}
-
-	public int applyRuleColours233() {
-		int nextState = this.state;
-
-		if (this.state != 0) {
-			if (nAlives < 2 || nAlives > 3) {
-				nextState = 0;
-			} else {
-				nextState = determineNewColor();
-			}
-		} else {
-			if (nAlives == 3) {
-				nextState = determineNewColor();
-			}
-		}
-
-		return nextState;
-	}
-
-	public int applyRuleColours2336() {
-		int nextState = this.state;
-
-		if (this.state != 0) {
-			if (nAlives < 2 || nAlives > 3) {
-				nextState = 0;
-			} else {
-				nextState = determineNewColor();
-			}
-		} else {
-			if (nAlives == 3 || nAlives == 6) {
-				nextState = determineNewColor();
-			}
-		}
-
-		return nextState;
 	}
 }

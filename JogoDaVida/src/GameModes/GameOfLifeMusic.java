@@ -40,8 +40,6 @@ public class GameOfLifeMusic extends PApplet {
 		colors[1] = color(0);
 		ca.setStateColors(colors);
 
-		frequencies = new int[] { 131, 131 * 2, 131 * 3, 131 * 4, 131 * 5 };
-
 		initGridRandom();
 	}
 
@@ -68,6 +66,7 @@ public class GameOfLifeMusic extends PApplet {
 	}
 
 	void calculateNextGeneration() {
+		
 		sine.stop();
 
 		for (int i = 0; i < rows; i++) {
@@ -76,33 +75,12 @@ public class GameOfLifeMusic extends PApplet {
 			}
 		}
 
-		int[][] nextStates = new int[rows][cols];
-
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Cell currentCell = ca.getCellGrid(i, j);
-				int currentState = currentCell.getState();
-
-				int nextState = currentCell.applyRuleMusic();
-
-				if (currentState == 0 && nextState == 1) {
-					int scaleIndex = i % frequencies.length;
-					float frequency = frequencies[scaleIndex];
-
-					sine.freq(frequency);
-					sine.amp(0.2f); // Volume
-					sine.play();
-				}
-
-				nextStates[i][j] = nextState;
+				ca.getCellGrid(i, j).applyRuleMusic(sine);
 			}
 		}
-
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				ca.getCellGrid(i, j).setState(nextStates[i][j]);
-			}
-		}
+		
 	}
 
 	void drawButtons() {

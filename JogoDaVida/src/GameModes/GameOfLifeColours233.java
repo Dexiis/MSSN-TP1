@@ -1,11 +1,11 @@
 package GameModes;
+
 import GameModes.Cells.*;
 import processing.core.PApplet;
 
 public class GameOfLifeColours233 extends PApplet {
 
-	int cols;
-	int rows;
+	int cols, rows;
 	int cellSize = 10;
 
 	CellularAutomata ca;
@@ -70,8 +70,6 @@ public class GameOfLifeColours233 extends PApplet {
 
 	void calculateNextGeneration() {
 
-		int[][] nextStates = new int[rows][cols];
-
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				ca.getCellGrid(i, j).countAlives();
@@ -80,15 +78,10 @@ public class GameOfLifeColours233 extends PApplet {
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				nextStates[i][j] = ca.getCellGrid(i, j).applyRuleColours233();
+				ca.getCellGrid(i, j).applyRuleColours233();
 			}
 		}
 
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				ca.getCellGrid(i, j).setState(nextStates[i][j]);
-			}
-		}
 	}
 
 	public void mousePressed() {

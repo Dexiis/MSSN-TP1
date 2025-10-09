@@ -1,4 +1,5 @@
 package GameModes;
+
 import GameModes.Cells.*;
 import processing.core.PApplet;
 
@@ -68,19 +69,12 @@ public class TwoDCellularAutomata extends PApplet {
 			}
 		}
 
-		int[][] nextStates = new int[rows][cols];
-
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				nextStates[i][j] = ca.getCellGrid(i, j).applyRuleColoursMajority();
+				ca.getCellGrid(i, j).applyRuleColoursMajority();
 			}
 		}
 
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				ca.getCellGrid(i, j).setState(nextStates[i][j]);
-			}
-		}
 	}
 
 	public void mousePressed() {

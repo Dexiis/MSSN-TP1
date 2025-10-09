@@ -102,6 +102,7 @@ public class GameOfLifeCustom extends PApplet {
 				ca.getCellGrid(i, j).applyRule233();
 			}
 		}
+		
 	}
 
 	public void mousePressed() {
