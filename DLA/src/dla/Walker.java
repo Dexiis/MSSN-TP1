@@ -19,7 +19,7 @@ public class Walker {
 
     public Walker(PApplet p)
     {
-        //pos = new PVector(p.random(p.width), p.random(p.height));
+    	
         pos = new PVector(p.width / 2, p.height / 2);
         PVector d = PVector.random2D();
         pos.add(d.mult(p.height / 2));
@@ -62,8 +62,6 @@ public class Walker {
 
     public void updateState(PApplet p, List<Walker> walkers)
     {
-        /*if (state == State.STOPPED)
-            return;*/
         
         for (Walker w : walkers)
         {

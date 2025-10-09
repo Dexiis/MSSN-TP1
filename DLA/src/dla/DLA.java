@@ -14,7 +14,6 @@ public class DLA implements IProcessingApp
     private int NUM_STEPS_PER_FRAME = 100;
     private List<Walker> walkers;
     
-    @Override
     public void setup(PApplet parent) 
     {
         walkers = new ArrayList<Walker>();
@@ -28,7 +27,6 @@ public class DLA implements IProcessingApp
         }
     }
 
-    @Override
     public void draw(PApplet parent, float dt) 
     {
         parent.background(200);
@@ -50,16 +48,12 @@ public class DLA implements IProcessingApp
         
     }
 
-    @Override
     public void keyPressed(PApplet parent) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+
     }
 
-    @Override
     public void mousePressed(PApplet parent) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+
     }
     
 }
