@@ -4,10 +4,10 @@ public class MainMenu extends PApplet {
 
 	String title = "Chose your game:";
 	String option1 = "Start Custom Game of Life 23/3";
-	String option2 = "Start Game of Life 23/3 with music";
-	String option3 = "Start Game of Life 23/3 with colours";
-	String option4 = "Start Game of Life 23/36 with colours";
-	String option5 = "Start 2D Cellular Automata";
+	String option2 = "Start Game of Life 23/3 with colours";
+	String option3 = "Start Game of Life 23/36 with colours";
+	String option4 = "Start 2D Cellular Automata";
+	String option5 = "Start Game of Life 23/3 with music";
 
 	public void settings() {
 		size(500, 360);
@@ -61,22 +61,22 @@ public class MainMenu extends PApplet {
 
 		float y2 = 140;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y2 - h / 2 && mouseY < y2 + h / 2) {
-			PApplet.main("GameOfLifeMusic");
+			PApplet.main("GameOfLifeColours233");
 		}
 
 		float y3 = 200;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y3 - h / 2 && mouseY < y3 + h / 2) {
-			PApplet.main("GameOfLifeColours233");
+			PApplet.main("GameOfLifeColours2336");
 		}
 
 		float y4 = 260;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y4 - h / 2 && mouseY < y4 + h / 2) {
-			PApplet.main("GameOfLifeColours2336");
+			PApplet.main("TwoDCellularAutomata");
 		}
 
 		float y5 = 320;
 		if (mouseX > x - w / 2 && mouseX < x + w / 2 && mouseY > y5 - h / 2 && mouseY < y5 + h / 2) {
-			PApplet.main("TwoDCellularAutomata");
+			PApplet.main("GameOfLifeMusic");
 		}
 	}
 

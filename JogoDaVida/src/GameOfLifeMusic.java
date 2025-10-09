@@ -1,3 +1,5 @@
+import Cells.Cell;
+import Cells.CellularAutomata;
 import processing.core.PApplet;
 import processing.sound.*;
 
@@ -6,18 +8,14 @@ public class GameOfLifeMusic extends PApplet {
 	int cols, rows;
 	int cellSize = 10;
 
-	int[] pentatonicFrequencies;
+	CellularAutomata ca;
 
-	int[][] grid;
-	int[][] next;
-
+	int[] frequencies;
 	SinOsc sine = new SinOsc(this);
 
 	boolean isPaused = false;
 
-	boolean notePlayedThisFrame = false;
-
-	int buttonWidth = 40;
+	int buttonWidth = 60;
 	int buttonHeight = 30;
 	int buttonX1 = 10;
 	int buttonX2 = buttonX1 + buttonWidth + 10;
@@ -25,8 +23,12 @@ public class GameOfLifeMusic extends PApplet {
 
 	int gridYStart = buttonY + buttonHeight + 10;
 
+	public static void main(String[] args) {
+		PApplet.main("GameOfLifeMusic.GameOfLifeMusic");
+	}
+
 	public void settings() {
-		size(10 * 21, 10 * (21 + 5));
+		size(200, 280);
 	}
 
 	public void setup() {
@@ -35,10 +37,14 @@ public class GameOfLifeMusic extends PApplet {
 		cols = width / cellSize;
 		rows = (height - gridYStart) / cellSize;
 
-		grid = new int[cols][rows];
-		next = new int[cols][rows];
+		ca = new CellularAutomata(this, rows, cols);
 
-		pentatonicFrequencies = new int[] { 262, 294, 330, 392, 440 };
+		int[] colors = new int[2];
+		colors[0] = color(255);
+		colors[1] = color(0);
+		ca.setStateColors(colors);
+
+		frequencies = new int[] { 131, 131 * 2, 131 * 3, 131 * 4, 131 * 5 };
 
 		initGridRandom();
 	}
@@ -46,38 +52,65 @@ public class GameOfLifeMusic extends PApplet {
 	public void draw() {
 		background(255);
 
+		stroke(200);
+		line(0, gridYStart, width, gridYStart);
+
+		pushMatrix();
+		translate(0, gridYStart);
+		ca.display();
+		popMatrix();
+
+		drawButtons();
+
 		if (!isPaused) {
 			calculateNextGeneration();
 		}
-
-		drawGrid();
-		drawButtons();
 	}
 
 	void initGridRandom() {
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				grid[x][y] = (int) random(4) == 0 ? 1 : 0;
-			}
-		}
+		ca.setRandomStates();
 	}
 
-	void drawGrid() {
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (grid[x][y] == 1) {
-					fill(0);
-				} else {
-					fill(255);
+	void calculateNextGeneration() {
+		sine.stop();
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				ca.getCellGrid(i, j).countAlives();
+			}
+		}
+
+		int[][] nextStates = new int[rows][cols];
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				Cell currentCell = ca.getCellGrid(i, j);
+				int currentState = currentCell.getState();
+
+				int nextState = currentCell.applyRuleMusic();
+
+				if (currentState == 0 && nextState == 1) {
+					int scaleIndex = i % frequencies.length;
+					float frequency = frequencies[scaleIndex];
+
+					sine.freq(frequency);
+					sine.amp(0.2f); // Volume
+					sine.play();
 				}
-				stroke(200);
-				rect(x * cellSize, y * cellSize + gridYStart, cellSize, cellSize);
+
+				nextStates[i][j] = nextState;
+			}
+		}
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				ca.getCellGrid(i, j).setState(nextStates[i][j]);
 			}
 		}
 	}
 
 	void drawButtons() {
-		textSize(10);
+		textSize(14);
 		textAlign(CENTER, CENTER);
 
 		if (isPaused) {
@@ -100,57 +133,7 @@ public class GameOfLifeMusic extends PApplet {
 		}
 		rect(buttonX2, buttonY, buttonWidth, buttonHeight, 5);
 		fill(0);
-		text("CONTINUAR", buttonX2 + buttonWidth / 2, buttonY + buttonHeight / 2);
-	}
-
-	void calculateNextGeneration() {
-		sine.stop();
-
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
-				if (x == 0 || x == cols - 1 || y == 0 || y == rows - 1)
-					next[x][y] = 0;
-				else
-					next[x][y] = grid[x][y];
-			}
-		}
-
-		for (int x = 1; x < cols - 1; x++) {
-			for (int y = 1; y < rows - 1; y++) {
-
-				int liveNeighbors = 0;
-
-				for (int i = -1; i <= 1; i++) {
-					for (int j = -1; j <= 1; j++) {
-						if (i == 0 && j == 0)
-							continue;
-						liveNeighbors += grid[x + i][y + j];
-					}
-				}
-
-				if (grid[x][y] == 1) {
-					if (liveNeighbors < 2 || liveNeighbors > 3) {
-						next[x][y] = 0;
-					}
-
-				} else {
-					if (liveNeighbors == 3) {
-						next[x][y] = 1;
-
-						int scaleIndex = y % pentatonicFrequencies.length;
-						float frequency = pentatonicFrequencies[scaleIndex];
-
-						sine.freq(frequency);
-						sine.amp(0.1f);
-						sine.play();
-					}
-				}
-			}
-		}
-
-		grid = next;
-		next = new int[cols][rows];
-
+		text("CONT.", buttonX2 + buttonWidth / 2, buttonY + buttonHeight / 2);
 	}
 
 	public void mousePressed() {
@@ -163,19 +146,18 @@ public class GameOfLifeMusic extends PApplet {
 
 		if (mouseX >= buttonX2 && mouseX <= buttonX2 + buttonWidth && mouseY >= buttonY
 				&& mouseY <= buttonY + buttonHeight) {
-
 			isPaused = false;
 			return;
 		}
 
 		if (mouseY >= gridYStart) {
+			int x_click = mouseX;
+			int y_click = mouseY - gridYStart;
 
-			int x_grid = mouseX / cellSize;
-			int y_grid = (mouseY - gridYStart) / cellSize;
+			Cell clickedCell = ca.getCell(x_click, y_click);
 
-			if (x_grid >= 0 && x_grid < cols && y_grid >= 0 && y_grid < rows) {
-
-				grid[x_grid][y_grid] = 1 - grid[x_grid][y_grid];
+			if (clickedCell != null) {
+				clickedCell.flipState();
 			}
 		}
 	}
