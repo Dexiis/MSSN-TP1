@@ -13,10 +13,6 @@ public class GameOfLifeColours2336 extends PApplet {
 	final int NUMBER_OF_STATES = 9;
 	final int DEAD_COLOR_INDEX = 0;
 
-	public static void main(String[] args) {
-		PApplet.main("GameOfLifeColours233");
-	}
-
 	public void settings() {
 		size(1600, 900);
 	}

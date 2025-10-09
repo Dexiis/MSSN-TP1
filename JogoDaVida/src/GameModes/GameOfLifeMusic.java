@@ -23,10 +23,6 @@ public class GameOfLifeMusic extends PApplet {
 
 	int gridYStart = buttonY + buttonHeight + 10;
 
-	public static void main(String[] args) {
-		PApplet.main("GameOfLifeMusic.GameOfLifeMusic");
-	}
-
 	public void settings() {
 		size(200, 280);
 	}
