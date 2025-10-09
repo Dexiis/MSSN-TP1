@@ -1,4 +1,4 @@
-package Cells;
+package GameModes.Cells;
 
 import processing.core.PApplet;
 

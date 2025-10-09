@@ -1,4 +1,5 @@
-import Cells.CellularAutomata;
+package GameModes;
+import GameModes.Cells.*;
 import processing.core.PApplet;
 
 public class GameOfLifeColours233 extends PApplet {
