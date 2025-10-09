@@ -10,7 +10,7 @@ public class ProcessingSetup extends PApplet {
     public static void main(String[] args)
     {
         app = new DLA();
-        PApplet.main(ProcessingSetup.class.getName());
+        PApplet.main(ProcessingSetup.class);
     }
     
     @Override

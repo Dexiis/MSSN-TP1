@@ -5,23 +5,22 @@ import processing.sound.*;
 
 public class GameOfLifeMusic extends PApplet {
 
-	int cols, rows;
-	int cellSize = 10;
+	private int cols, rows;
+	private int cellSize = 10;
+	
+	private int buttonWidth = 60;
+	private int buttonHeight = 30;
+	private int buttonX1 = 10;
+	private int buttonX2 = buttonX1 + buttonWidth + 10;
+	private int buttonY = 10;
+	
+	private int gridYStart = buttonY + buttonHeight + 10;
+	
+	private boolean isPaused = false;
 
-	CellularAutomata ca;
+	private CellularAutomata ca;
 
-	int[] frequencies;
-	SinOsc sine = new SinOsc(this);
-
-	boolean isPaused = false;
-
-	int buttonWidth = 60;
-	int buttonHeight = 30;
-	int buttonX1 = 10;
-	int buttonX2 = buttonX1 + buttonWidth + 10;
-	int buttonY = 10;
-
-	int gridYStart = buttonY + buttonHeight + 10;
+	private SinOsc sine = new SinOsc(this);
 
 	public void settings() {
 		size(200, 280);
@@ -66,7 +65,6 @@ public class GameOfLifeMusic extends PApplet {
 	}
 
 	void calculateNextGeneration() {
-		
 		sine.stop();
 
 		for (int i = 0; i < rows; i++) {
@@ -111,6 +109,7 @@ public class GameOfLifeMusic extends PApplet {
 	}
 
 	public void mousePressed() {
+		
 		if (mouseX >= buttonX1 && mouseX <= buttonX1 + buttonWidth && mouseY >= buttonY
 				&& mouseY <= buttonY + buttonHeight) {
 			isPaused = true;
@@ -134,5 +133,6 @@ public class GameOfLifeMusic extends PApplet {
 				clickedCell.flipState();
 			}
 		}
+		
 	}
 }

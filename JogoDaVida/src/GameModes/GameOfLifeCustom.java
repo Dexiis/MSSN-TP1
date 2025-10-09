@@ -4,24 +4,21 @@ import processing.core.PApplet;
 
 public class GameOfLifeCustom extends PApplet {
 
-	int cols;
-	int rows;
-	int cellSize = 10;
+	private int cols, rows;
+	private int cellSize = 10;
+	
+	private int buttonWidth = 100;
+	private int buttonHeight = 30;
+	private int buttonX1 = 10;
+	private int buttonX2 = buttonX1 + buttonWidth + 10;
+	private int buttonX3 = buttonX2 + buttonWidth + 10;
+	private int buttonY = 10;
+	
+	private int gridYStart = buttonY + buttonHeight + 10;
 
-	boolean isPaused = false;
+	private boolean isPaused = false;
 
-	int buttonWidth = 100;
-	int buttonHeight = 30;
-
-	int buttonX1 = 10;
-	int buttonX2 = buttonX1 + buttonWidth + 10;
-	int buttonX3 = buttonX2 + buttonWidth + 10;
-
-	int buttonY = 10;
-
-	int gridYStart = buttonY + buttonHeight + 10;
-
-	CellularAutomata ca;
+	private CellularAutomata ca;
 
 	public void settings() {
 		size(1600, 900);
@@ -56,7 +53,7 @@ public class GameOfLifeCustom extends PApplet {
 		}
 	}
 
-	void drawButtons() {
+	private void drawButtons() {
 		textSize(14);
 		textAlign(CENTER, CENTER);
 
@@ -89,7 +86,7 @@ public class GameOfLifeCustom extends PApplet {
 		text("REINICIAR", buttonX3 + buttonWidth / 2, buttonY + buttonHeight / 2);
 	}
 
-	void calculateNextGeneration() {
+	private void calculateNextGeneration() {
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -106,6 +103,7 @@ public class GameOfLifeCustom extends PApplet {
 	}
 
 	public void mousePressed() {
+		
 		if (mouseX >= buttonX1 && mouseX <= buttonX1 + buttonWidth && mouseY >= buttonY
 				&& mouseY <= buttonY + buttonHeight) {
 
@@ -139,5 +137,6 @@ public class GameOfLifeCustom extends PApplet {
 				clickedCell.flipState();
 			}
 		}
+		
 	}
 }

@@ -3,12 +3,12 @@ import processing.core.PApplet;
 
 public class MainMenu extends PApplet {
 
-	String title = "Chose your game:";
-	String option1 = "Start Custom Game of Life 23/3";
-	String option2 = "Start Game of Life 23/3 with colours";
-	String option3 = "Start Game of Life 23/36 with colours";
-	String option4 = "Start 2D Cellular Automata";
-	String option5 = "Start Game of Life 23/3 with music";
+	private String title = "Chose your game:";
+	private String option1 = "Start Custom Game of Life 23/3";
+	private String option2 = "Start Game of Life 23/3 with colours";
+	private String option3 = "Start Game of Life 23/36 with colours";
+	private String option4 = "Start 2D Cellular Automata";
+	private String option5 = "Start Game of Life 23/3 with music";
 
 	public void settings() {
 		size(500, 360);

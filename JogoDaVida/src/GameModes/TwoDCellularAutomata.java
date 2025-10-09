@@ -5,13 +5,12 @@ import processing.core.PApplet;
 
 public class TwoDCellularAutomata extends PApplet {
 
-	int cols;
-	int rows;
-	int cellSize = 10;
+	private int cols, rows;
+	private int cellSize = 10;
 
-	CellularAutomata ca;
+	private CellularAutomata ca;
 
-	final int NUMBER_OF_STATES = 9;
+	private final int NUMBER_OF_STATES = 9;
 
 	public void settings() {
 		size(1600, 900);
@@ -38,7 +37,7 @@ public class TwoDCellularAutomata extends PApplet {
 		ca.display();
 	}
 
-	void setupColorStates() {
+	private void setupColorStates() {
 		int[] customColors = new int[NUMBER_OF_STATES];
 		customColors[0] = color(0, 0, 0);
 		customColors[1] = color(255, 0, 0);
@@ -53,7 +52,7 @@ public class TwoDCellularAutomata extends PApplet {
 		ca.setStateColors(customColors);
 	}
 
-	void initGridRandom() {
+	private void initGridRandom() {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				ca.getCellGrid(i, j).setState((int) random(1, NUMBER_OF_STATES));
@@ -61,7 +60,7 @@ public class TwoDCellularAutomata extends PApplet {
 		}
 	}
 
-	void calculateNextGeneration() {
+	private void calculateNextGeneration() {
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
